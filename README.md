@@ -28,7 +28,7 @@ Locally, run with `--allow-cpu`.
 
 ## How to run
 ```bash
-git clone https://github.com/<username>/<repo>.git
+git clone  https://github.com/dareen-abualhaj/rag-assistant.git
 cd <repo>
 python -m venv venv
 source venv/bin/activate          # Windows: venv\Scripts\activate
@@ -53,3 +53,5 @@ python -m scripts.run_preprocessing        # -> data/processed/clean_corpus.parq
     ├── raw/        (git-ignored)
     └── processed/  (clean_corpus.parquet)
 ```
+## Week 2: Chunking, Embeddings & Vector DB
+_Coming soon._
