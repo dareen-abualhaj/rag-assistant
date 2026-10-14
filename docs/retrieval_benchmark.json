@@ -1,0 +1,82 @@
+{
+  "summary": {
+    "n_queries": 10,
+    "k": 5,
+    "mean_total_ms": 28.49,
+    "median_total_ms": 23.92,
+    "max_total_ms": 52.18,
+    "mean_search_ms": 12.56
+  },
+  "queries": [
+    {
+      "query": "Who was the first president of the United States?",
+      "embed_ms": 20.87,
+      "search_ms": 18.52,
+      "top_title": "George Washington",
+      "top_distance": 0.2669
+    },
+    {
+      "query": "How does photosynthesis work in plants?",
+      "embed_ms": 17.75,
+      "search_ms": 14.57,
+      "top_title": "Photosynthesis",
+      "top_distance": 0.2266
+    },
+    {
+      "query": "What causes earthquakes?",
+      "embed_ms": 16.33,
+      "search_ms": 8.49,
+      "top_title": "Earthquake",
+      "top_distance": 0.3054
+    },
+    {
+      "query": "History of the Roman Empire",
+      "embed_ms": 18.46,
+      "search_ms": 8.47,
+      "top_title": "Roman Empire",
+      "top_distance": 0.3448
+    },
+    {
+      "query": "Which animals live in the ocean?",
+      "embed_ms": 14.86,
+      "search_ms": 8.18,
+      "top_title": "Ray",
+      "top_distance": 0.3127
+    },
+    {
+      "query": "How do airplanes fly?",
+      "embed_ms": 15.13,
+      "search_ms": 7.21,
+      "top_title": "Aircraft",
+      "top_distance": 0.2941
+    },
+    {
+      "query": "What is the capital city of France?",
+      "embed_ms": 14.24,
+      "search_ms": 6.91,
+      "top_title": "Paris",
+      "top_distance": 0.3519
+    },
+    {
+      "query": "Explain how the human heart works",
+      "embed_ms": 15.08,
+      "search_ms": 5.91,
+      "top_title": "Heart",
+      "top_distance": 0.3627
+    },
+    {
+      "query": "Famous painters of the Renaissance",
+      "embed_ms": 14.85,
+      "search_ms": 6.9,
+      "top_title": "Florence",
+      "top_distance": 0.3648
+    },
+    {
+      "query": "What is the speed of light?",
+      "embed_ms": 11.7,
+      "search_ms": 40.47,
+      "top_title": "Speed of light",
+      "top_distance": 0.2921
+    }
+  ]
+}
