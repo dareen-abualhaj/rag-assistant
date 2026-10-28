@@ -5,3 +5,4 @@ __pycache__/
 *.pyc
 chroma_db/
 logs/
+data/interim/
