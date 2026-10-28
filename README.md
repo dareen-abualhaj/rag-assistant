@@ -1,6 +1,6 @@
 # RAG Assistant
 
-A retrieval-augmented question-answering system over Simple English Wikipedia: preprocessing -> chunking -> embeddings -> ChromaDB -> Groq LLM, with hallucination checks and latency logging.
+A retrieval-augmented question-answering system over Simple English Wikipedia: preprocessing -> chunking -> embeddings -> ChromaDB -> Groq LLM, with hallucination checks, latency logging and NLP metadata (topics, sentiment).
 
 ## How to run (all weeks)
 ```bash
@@ -20,13 +20,22 @@ python -m scripts.build_index              # -> chroma_db/ (git-ignored, rebuilt
 python -m scripts.benchmark_retrieval      # -> docs/retrieval_benchmark.json
 
 # Week 3: LLM (needs a free Groq API key from console.groq.com)
-cp .env.example .env                       # then edit .env and set GROQ_API_KEY
+cp .env.example .env                       # then edit .env and set GROQ_API_KEY and LLM_MODEL
 python -m scripts.ask "How do airplanes fly?"
 python -m scripts.evaluate_rag             # -> docs/rag_evaluation.json (about 10 Groq calls, ~1.5 min)
+
+# Week 4: NLP analysis
+python -m scripts.run_topic_modeling       # -> data/processed/doc_topics.parquet, docs/topics_overview.csv
+python -m scripts.suggest_topic_labels     # LLM label suggestions (needs the Groq key)
+python -m scripts.apply_topic_labels       # final labels = suggestions + manual corrections
+python -m scripts.evaluate_topics          # -> docs/topic_evaluation.json (uses data/labels/topic_validation.csv)
 
 # Tests (no network or API key needed, everything is mocked)
 pytest -v
 ```
+
+The manual validation sample (`data/labels/topic_validation.csv`) is committed, so `evaluate_topics` runs without re-annotating. To redo it from scratch: `python -m scripts.make_topic_validation_sample --force`, then
+`python -m scripts.annotate --file data/labels/topic_validation.csv --column fits --choices y,n --show title,label,snippet`.
 
 ## Project structure
 ```
@@ -34,9 +43,12 @@ pytest -v
 ├── requirements.txt
 ├── .env.example
 ├── .gitignore
-├── docs/      (colab_cuda_check.png, retrieval_benchmark.json, rag_evaluation.json)
+├── docs/      (colab_cuda_check.png, retrieval_benchmark.json, rag_evaluation.json,
+│               topics_overview.csv, topic_evaluation.json)
 ├── scripts/   (verify_env.py, download_data.py, run_preprocessing.py,
-│               build_index.py, benchmark_retrieval.py, ask.py, evaluate_rag.py)
+│               build_index.py, benchmark_retrieval.py, ask.py, evaluate_rag.py,
+│               run_topic_modeling.py, suggest_topic_labels.py, apply_topic_labels.py,
+│               make_topic_validation_sample.py, annotate.py, evaluate_topics.py)
 ├── src/       (preprocessing.py, chunking.py, embeddings.py, vector_store.py,
 │               llm.py, prompts.py, rag.py)
 ├── tests/     (test_preprocessing.py, test_chunking.py, test_llm.py,
@@ -45,7 +57,9 @@ pytest -v
 ├── logs/      (git-ignored, latency.jsonl)
 └── data/
     ├── raw/        (git-ignored)
-    └── processed/  (clean_corpus.parquet)
+    ├── interim/    (git-ignored, cached document embeddings)
+    ├── labels/     (topic_validation.csv: manual annotations)
+    └── processed/  (clean_corpus.parquet, doc_topics.parquet)
 ```
 
 ---
@@ -212,3 +226,92 @@ The LLM tests simulate 429, timeouts, 5xx, 401, 404, token-limit errors and empt
 - The model can return empty output for requests unrelated to the retrieved context. The system then fails safely (no hallucinated answer is shown, the sources are still listed) but slowly, because all 4 attempts are used.
 - Back-to-back requests on the Groq free tier can be slow: in a first evaluation run without pauses, four answers took 10-12 s instead of about 1.3 s.
 - The grounding threshold (`0.30`) is lenient and was not tuned on a labelled set; the citation check does most of the work.
+
+---
+
+# Week 4: NLP Analysis (Topic & Sentiment)
+
+> **Status:** topic modeling, topic labelling and manual topic validation are complete (below). Sentiment analysis and the integration of NLP metadata into ChromaDB are still in progress and are described in the last two sections.
+
+## What I built
+- `scripts/run_topic_modeling.py`: BERTopic over the 5,939 articles -> `data/processed/doc_topics.parquet` and `docs/topics_overview.csv`
+- `scripts/suggest_topic_labels.py`: asks the Groq LLM for a short label per topic (suggestions only)
+- `scripts/apply_topic_labels.py`: final labels = LLM suggestion + my manual corrections
+- `scripts/make_topic_validation_sample.py`, `scripts/annotate.py`: draw a random 60-article sample and annotate it interactively -> `data/labels/topic_validation.csv`
+- `scripts/evaluate_topics.py`: accuracy on the manual sample, outlier rate by document length, share of date pages -> `docs/topic_evaluation.json`
+
+## Topic modeling
+- **Unit of analysis:** whole articles (5,939), not chunks.
+- **Embeddings:** the same `all-MiniLM-L6-v2` model as Week 2, applied to the first 2,000 characters of each article and cached in `data/interim/` so re-runs are fast.
+- **BERTopic pipeline:** UMAP (5 dimensions, cosine, seed 42) -> HDBSCAN (`min_cluster_size=20`, `min_samples=5`) -> c-TF-IDF keywords with English stop words, unigrams and bigrams, words appearing in at least 5 articles.
+- **Why BERTopic:** it reuses the embeddings already used for retrieval and does not require choosing the number of topics in advance.
+
+**Result:** 70 topics plus an outlier group (topic -1) of 1,180 articles (19.9%). The largest topics after labelling:
+
+| Topic | Articles | Final label | Top keywords |
+|---|---|---|---|
+| 0 | 398 | Dates & Years | american, politician, actor, footballer, singer |
+| 1 | 211 | Political Systems | party, government, people, money, countries |
+| 2 | 205 | Religion | god, believe, church, bible, people |
+| 3 | 201 | Medicine & Human Body | cells, blood, cell, disease, body |
+| 4 | 155 | U.S. Cities | state, city, lake, kansas, states |
+
+`min_cluster_size=20` was the default and I kept it: the topics were specific enough to name in one to three words, and 19.9% outliers is acceptable for HDBSCAN. I did not try other values.
+
+## Topic labels
+BERTopic only returns keywords, so each topic needs a human-readable label (`label` column in `docs/topics_overview.csv`).
+1. The LLM proposed a label for each topic from its keywords and four sample titles.
+2. I reviewed every topic against its keywords and sample titles and corrected the labels in `scripts/apply_topic_labels.py` (the `OVERRIDES` dictionary).
+3. **Result:** I accepted 43 of 68 suggestions unchanged (63%), corrected 25, and wrote 2 myself because the LLM call failed (topics 15 and 69). The final labels contain 64 distinct names for 70 topics, because related topics deliberately share a label (for example several topics share "Dates & Years" and two share "Singers & Musicians"), so a filter on the label covers all of them.
+
+The LLM often labelled from the keywords alone and ignored the titles: topic 0 was suggested as "Birthdays", but its sample titles ("May 9", "1782", "October 24") show it is date pages.
+
+## Manual validation of the topics
+I drew a random sample of 60 articles (fixed seed, outliers excluded) and, for each one, judged whether an ordinary reader would find the article reasonable under its topic label (`y`/`n`, shown with the title, label and first 400 characters).
+
+- Articles 1-15 were judged entirely by me. Articles 16-60 were pre-drafted by an LLM and then reviewed by me line by line; I changed 0 of those 45 judgements (the `source` column in the CSV records which is which).
+- **Accuracy: 85.0% (51 of 60).**
+
+Articles that did not fit their label:
+
+| Article | Label | Why |
+|---|---|---|
+| Skagerrak | European Countries | a strait, not a country |
+| John Kerry | U.S. Presidents | politician, never president |
+| Confederate States of America | U.S. Presidents | a state, not a president |
+| John Wilkes Booth | U.S. Presidents | actor who killed a president |
+| Vietnam Veterans Memorial | Asian Countries | a US monument, grouped by the word "Vietnam" |
+| Pop | Music Genres | disambiguation page (sound, protocol, ...) |
+| Hebrew language | Religion | a language article |
+| Evolutionary biology | Medicine & Human Body | biology, not medicine |
+| Combinatorial game theory | Game Play | a mathematical theory |
+
+**What I learned:** three of the nine errors came from one narrow label (topic 13, "U.S. Presidents", whose keywords include president, Reagan and Bush but which holds US politics in general). After seeing this I renamed topic 13 to "U.S. Politics & History". The 85% was measured with the original labels and not re-measured after the rename. Four borderline "fit" judgements (Microprocessor under Computer Software, Jameson under Food & Nutrition, Alabama under U.S. Cities, Oven under Tools & Weapons) were accepted as reasonable; if they were counted as errors the accuracy would be about 78%.
+
+## Edge cases
+- **Short documents:** shorter articles are more often left unclustered.
+
+| Article length (chars) | Articles | Outlier rate |
+|---|---|---|
+| < 500 | 971 | 25.5% |
+| 500-1,000 | 1,065 | 22.2% |
+| 1,000-2,000 | 1,217 | 18.6% |
+| 2,000-5,000 | 1,415 | 21.2% |
+| > 5,000 | 1,271 | 13.4% |
+
+  Articles under 500 characters are about twice as likely to be outliers as articles over 5,000, but the trend is not monotonic, so I treat it as a tendency. Outliers get the label "Uncategorized" and no topic filter will match them.
+- **Date and year pages:** 7 topics (0, 12, 15, 43, 57, 59, 69) are pages like "May 9", "1968" or "December 31", 691 articles in total (11.6% of the corpus). BERTopic groups them by article format (lists of events, births and deaths), not by subject. They share the label "Dates & Years" so they can be excluded from filtered search.
+- **Disambiguation and jargon pages:** pages like "Pop" mix several unrelated meanings and cannot have a single correct topic.
+- **Jargon:** technical vocabulary (chemistry, mathematics, computing) clustered well in the sample; I did not run a separate jargon-specific test.
+
+## Sentiment analysis (in progress)
+Plan: compare a lexicon baseline (VADER) with a 3-class transformer model on the lead of each article, and evaluate both against 50 articles that I label manually (positive / neutral / negative). Wikipedia is written in a neutral tone, so I expect most articles to be neutral. Results and accuracy will be added here once the manual labels exist.
+
+## NLP metadata in ChromaDB and filtered retrieval (in progress)
+Plan: add `topic`, `topic_label` and the sentiment label to the metadata of every chunk with `collection.update` (no re-embedding needed), expose filters in the search function and in `scripts/ask.py`, and measure the effect of filtering. Not implemented yet.
+
+## Known limitations (Week 4)
+- Topic labels were generated with an LLM and corrected by me; the accuracy of 85% comes from a 60-article sample judged by a single person (me), so it has a wide margin of error.
+- 45 of the 60 validation judgements started as an LLM draft, which may have anchored my decisions.
+- Several broad topics mix subjects (topic 0 is mostly date pages, topic 1 mixes politics and economics), and 19.9% of articles are unclustered.
+- Only one clustering configuration (`min_cluster_size=20`) was evaluated.
