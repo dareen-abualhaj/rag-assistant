@@ -1,0 +1,72 @@
+topic,count,top_words,sample_titles,label,label_suggested
+-1,1180,,Global | String theory | Peter Davison | March 12,Uncategorized,Uncategorized
+0,398,"american, politician, actor, footballer, singer, actress, german, english",May 9 | 1782 | October 24 | May 16,Dates & Years,Birthdays
+1,211,"party, government, people, money, countries, communist, law, state",Service economy | Governor | Authority | Anarchy,Political Systems,Political Systems
+2,205,"god, believe, church, bible, people, jesus, religion, religions",Interim | Devil | Archimedes | Book of Genesis,Religion,Christian Faith
+3,201,"cells, blood, cell, disease, body, person, symptoms, asthma",Silicosis | Psychoneuroimmunology | Head | Pneumoconiosis,Medicine & Human Body,Respiratory Diseases
+4,155,"state, city, lake, kansas, states, county, united states, river","Wilmington | Salem, Oregon | Annapolis, Maryland | Washington, D.C.",U.S. Cities,U.S. Cities
+5,152,"london, ireland, england, kingdom, united kingdom, county, town, somerset",Weston-super-Mare | Stamford Bridge | Rutland | Millennium Dome,United Kingdom Places,United Kingdom Places
+6,149,"birds, species, fish, animals, eat, eggs, live, dog",Oriole | Herbivore | Rottweiler | Pig,Animal Kingdom,Animal Kingdom
+7,134,"band, groups, album, music groups, music, rock, bands, musical",The Dillinger Escape Plan | Toad the Wet Sprocket | Def Leppard | Athlete (band),Music Bands,Music Bands
+8,125,"chemical, compounds, atoms, used, carbon, metal, metals, atom",Oxygen | List of minerals | Acid | Ferrocement,Chemistry & Materials,Chemical Elements
+9,111,"romania, russia, country, city, poland, netherlands, century, finland",Stargard | Russian | Romania | Swedish,European Countries,European Countries
+10,109,"words, word, alphabet, letter, verb, sentence, verbs, letters",Letter | Grammar | Dutton's Speedwords | Nigger,Language Basics,Language Basics
+11,98,"computer, windows, software, computers, operating, microsoft, usb, linux",Closed source | Programming language | Audio cassette | Compiler,Computer Software,Computer Software
+12,94,"january, march, february, december, april, july, november, june",1949 | 1995 | 1960 | 1940,Dates & Years,Historical Years
+13,92,"president, reagan, states, bush, united states, united, carter, presidential",George Washington Carver | Andrew Jackson | Dick | Lewinsky scandal,U.S. Presidents,U.S. Presidents
+14,88,"fruit, coffee, fruits, vitamin, sugar, food, seeds, chocolate",Cherimoya | Farming | Rice | Cocoa,Food & Nutrition,Food & Nutrition
+15,85,"january, august, february, june, march, october, april, july",1573 | 1925 | 1842 | 1836,Dates & Years,
+16,79,"penis, sexual, sex, women, gender, woman, male, abortion",Lesbian | Of | Toddler | Bisexuality,Sexuality & Gender,Sexuality & Gender
+17,78,"germany, switzerland, berlin, city, düsseldorf, rhine, frankfurt, districts",Saxony-Anhalt | Switzerland | Erfurt | Schwerin,Germany & Switzerland,German Swiss Cities
+18,72,"africa, national park, country, morocco, national, park, mandela, south",Swahili language | Burkina Faso | Luanda | Angola,Africa,African National Parks
+19,72,"books, wrote, austen, book, writers, sagan, story, ring",Astronaut | Upton Sinclair | Neil Armstrong | Rudyard Kipling,Writers & Astronauts,Book Authors
+20,71,"day, year, month, day week, april, week, march, christmas",Time | April | International Women's Day | February,Calendar & Time,Calendar Dates
+21,71,"mount, island, islands, volcano, hawaii, volcanoes, volcanic, hawaiian",Hawaiian | Herm | Garibaldi Volcanic Belt | Hawaii Ponoi,Islands & Volcanoes,Hawaiian Volcanoes
+22,69,"bullet, used, wood, bullets, hammer, knives, tools, guns",Pin cushion | Bottle | Saw | Basket,Tools & Weapons,Tools & Weapons
+23,67,"island, country, caribbean, america, spanish, city, cuba, islands",Guyana | Nezahualcoyotl | Peru | Antigua and Barbuda,Caribbean & Latin America,American Nations
+24,67,"album, jackson, musicians, eminem, song, singers, music, released",Stephen Stills | Michael Jackson | Mickey Gilley | Bob Marley,Singers & Musicians,Music Artists
+25,62,"henry, hugo, king, england, queen, france, william, anne",Francis II of France | Caribert of Laon | Dissolution of the monasteries | Victor Hugo,European Monarchs,European Monarchs
+26,60,"earth, planet, planets, sun, solar, jupiter, galaxy, neptune",Asteroid | Milky Way | White dwarf | Athena,Astronomy,Astronomy
+27,59,"milk, cream, pizza, cheese, food, ice cream, bread, sausage",Andouille | Cheese | Cookbook | List of supermarkets,Food & Dairy,Food & Dairy
+28,58,"team, ball, teams, players, league, play, game, football",Leisure | Long jump | D.C. United | List of water sports,Sports,Sports
+29,57,"web, internet, copyright, address, google, page, server, content",Browser | Home page | Epiphany (software) | Search engine,Internet & Web,Web Browsers
+30,55,"mario, game, nintendo, games, super, video, super mario, pokémon",Multiplayer video game | Yoshi | Pokémon (video game series) | Role-playing game,Video Games,Video Games
+31,54,"disney, popeye, sonic, comics, calvin, animated, movies, superman",Bill Watterson | Sick | Mulan (1998 movie) | MAD Magazine,Comics & Cartoons,Animated Comics
+32,54,"color, light, 255, pink, purple, waves, violet, wave",Light | Electromagnetic radiation | Fourier transform | Wave (physics),Color and Light,Color and Light
+33,51,"numbers, number, zero, mathematics, example, negative, algebra, matrix",Fermat's Last Theorem | Rational number | Real number | Subtraction,Number Theory,Number Theory
+34,51,"china, chinese, singapore, taiwan, vietnam, hong, hong kong, kong",2002 Bali terrorist bombing | Mao Zedong | Brunei | Kuala Lumpur,Asian Countries,Asian Countries
+35,50,"greece, turkey, greek, empire, ottoman, prefectures, city, cyprus",Argos | Serres | Euboea | Constantinople,Greek and Turkish Geography,Greek and Turkish Geography
+36,48,"paper, camera, film, art, graphics, ink, picture, pictures",Trailer (movie) | Camera | Crayon | Screen,Visual Arts,Visual Arts
+37,46,"car, ford, cars, wheel, vehicles, hamilton, model, toyota",Edsel | Terminus | Junction | Connection,Cars & Road Transport,Car Models
+38,45,"movie, actors, ep, movies, award, best, film, stiller",Casablanca (movie) | Ron Howard | Dennis Hopper | On the Waterfront,Movie Actors,Movie Actors
+39,45,"airbus, aircraft, tunnel, planes, air, plane, boeing, ships",Pearson Air Museum | London Underground | Luftwaffe | Pilot,Transportation,Transportation
+40,45,"germany, hitler, music, nazis, nazi, piano, wrote, holocaust",Heinrich Heine | Horst Köhler | George Gershwin | Holocaust denial,Nazi Germany & History,Music in Nazi Germany
+41,41,"club, league, football, cup, premier league, division, season, liverpool",Wigan Athletic F.C. | Manchester City F.C. | Charlton Athletic F.C. | Wimbledon F.C.,Premier League Football,Premier League Football
+42,40,"geometry, angle, length, triangle, volume, cylinder, area, circle",Triangle (disambiguation) | Line (geometry) | Point (geometry) | Axis,Basic Geometry,Basic Geometry
+43,39,"king, ii, iii, died, emperor, events, births, henry",1157 | 1197 | 1438 | Francisco Franco,Dates & Years,Kings and Emperors
+44,38,"hair, nudity, clothing, wear, nude, boots, worn, women",Underwear | Nancy Sinatra | Hair | Clothing,Fashion & Apparel,Fashion & Apparel
+45,38,"actors, award, movie, actors american, television, award winning, winning actors, movie actors",Rosie O'Donnell | Holly Marie Combs | Christina Ricci | Alyson Hannigan,Award-Winning Actors,Award-Winning Actors
+46,36,"india, sector, nepal, kashmir, bangladesh, bengal, indian, bhutan",Sanskrit | Redhill | Nepal | Bangladesh,South Asian Nations,South Asian Nations
+47,35,"sea, ocean, antarctica, arctic, continent, asia, europe, eu",Mediterranean Sea | South | Equator | List of countries by continents,World Geography,World Geography
+48,35,"singers, album, musicians, grammy, duet, carey, released, song",Olivia Newton-John | Janis Ian | Petula Clark | Christina Aguilera,Singers & Musicians,Music Artists
+49,34,"canada, halifax, quebec, vancouver, british columbia, toronto, columbia, province",Paul Martin | Calgary | New Brunswick | Vancouver Island,Canadian Provinces,Canadian Provinces
+50,33,"america, france, barcelona, spain, spanish, madrid, native, language",Mestizo | Valladolid | Dijon | Spanish language,Spain & Spanish World,Spanish Language
+51,32,"science, mind, philosophy, study, fiction, science fiction, psychology, scientific",Science fiction | Logic | Peer review | Psychology,Science & Philosophy,Science Fiction
+52,32,"japan, japanese, tokyo, tea, sailor, osaka, samurai, kyoto","Godzilla | Hokkaidō Prefecture | The Seven Samurai | Kobe, Hyōgo",Japanese Culture,Japanese Culture
+53,32,"temperature, water, clouds, celsius, liquid, air, ice, vapor",Triple point | Vapor | Refrigerator | Humidity,Weather & Temperature,Water Phase
+54,31,"books, libraries, language, press, bathroom, reader, sun, propaganda",News | Bookstore | Telephone book | Uncle John's Bathroom Reader,Books & Reading,Books & Reading
+55,30,"instruments, strings, instrument, bass, guitar, string, orchestra, piano",Balalaika | Clarinet | Double bass | Plectrum,Musical Instruments,Musical Instruments
+56,29,"italy, monaco, rome, roman, latin, city, italian, vatican",Civilization | Latin | Florence | Lombardy,Italian History,Italian History
+57,28,"january, emperor, december, united, president, king, march, united kingdom",1847 | 1790s | 1792 | 1820s,Dates & Years,Historical Dates
+58,28,"actors, television, actors american, award, movie, williams, television actors, movie actors",Malcolm McDowell | Sean Connery | Jamie Farr | Fred Gwynne,Actors,Actors
+59,27,"caesar, roman, year, bc, calendar, rome, ad, julian",9 | 30 | 10 | Augustus,Dates & Years,Roman Calendar
+60,27,"series, television series, television, buffy, season, american television, joey, leno",The Amanda Show | Still Standing | Ned's Declassified School Survival Guide | Larry David,American TV Series,American TV Series
+61,25,"game, cards, players, games, board, chess, player, card",Checkers | Playing card | Game | Go (board game),Game Play,Game Play
+62,24,"electricity, battery, energy, coal, electric, electrical, fuel, oil",Petroleum | Power station | Diesel-electric | Diesel engine,Energy Production,Energy Production
+63,24,"scotland, forest, glasgow, scottish, edinburgh, aberdeen, kingdom, dundee",Dumfries and Galloway | Inverness | Scotland | River Clyde,Scottish Geography,Scottish Geography
+64,24,"units, 000 000, 000, imperial, unit, litre, kilogram, metric",United States customary units | M | Gallon | Millennium,Measurement Units,Measurement Units
+65,22,"music, rock, pop, dance, punk, pop music, classical, classical music",Dance | Magnolia | Samba | Music,Music Genres,Music Genres
+66,22,"esperanto, language, english, languages, words, la, like, learn",American English | German language | Yiddish | British English,Language Learning,Language Learning
+67,20,"water, falls, river, amazon, stream, rivers, pollution, ft",Air | Basin | Well | River,Water & Rivers,River Systems
+68,20,"fox, skating, championships, run, cancer, tour, world championships, overall",Lance Armstrong | Oksana Grishuk | Kurt Browning | Denise Lewis,Athletes,World Champions
+69,20,"died, born, births, deaths, reformer, events, japanese, england",1603 | 1632 | 1623 | 1542,Dates & Years,
