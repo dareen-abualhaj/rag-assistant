@@ -13,6 +13,7 @@ OVERRIDES = {
     3: "Medicine & Human Body",
     8: "Chemistry & Materials",
     12: "Dates & Years",
+    13: "U.S. Politics & History",
     15: "Dates & Years",          # LLM call failed
     17: "Germany & Switzerland",
     18: "Africa",
